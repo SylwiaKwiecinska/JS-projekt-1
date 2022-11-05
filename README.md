@@ -1,2 +1,2 @@
-# JS-projekt-1
-Budget Planner
+# JS-Projekt1
+Aplikacja monitorująca wydatki w budżecie domowym w danym miesiącu.
