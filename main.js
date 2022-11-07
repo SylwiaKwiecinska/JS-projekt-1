@@ -87,7 +87,7 @@ addExpense.addEventListener("click", (event) => {
     expensesValue.innerText = totalExpenses;
 });
 
-const createIncomeListItem = (title, value, id) => {
+const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
     const incomeListItem = document.createElement("div");
     incomeListItem.style.paddingBottom = "5px";
     incomeListItem.classList = "flex flex--space-between budget__list__item";
@@ -95,7 +95,7 @@ const createIncomeListItem = (title, value, id) => {
     incomeListItem.style.setProperty("align-items", "center");
     const incomeListValue = document.createElement("p");
     
-    incomeListValue.innerText = `${title}:`;
+    incomeListValue.innerText = `${incomeTitle}:`;
     incomeListItem.appendChild(incomeListValue);
 
     incomesList.appendChild(incomeListItem);
@@ -105,11 +105,11 @@ const createIncomeListItem = (title, value, id) => {
     formDiv.style.setProperty("display", "flex");
     formDiv.style.setProperty("flex-direction", "row");
     formDiv.classList.add("formDiv");
-    incomeListItem.appendChild(formDiv)  
+    incomeListItem.appendChild(formDiv);  
     
     const formValue = document.createElement("form");
     formValue.classList.add("formValue");
-    formValue.innerText = `${value}`;
+    formValue.innerText = `${incomeValue}`;
     const PLN = document.createElement("span");
     PLN.innerText = "PLN";
     PLN.style.marginLeft = "10px";
@@ -123,14 +123,14 @@ const createIncomeListItem = (title, value, id) => {
     const btnEdit = document.createElement("button");
     btnEdit.classList.add("budget__list__item__button--edit");
     btnEdit.innerText = "Edit";
-    btnEdit.id = id;
+    btnEdit.id = incomeId;
     btnEdit.style.marginRight = "10px";
     btnDiv.appendChild(btnEdit);
 
     const btnDelete = document.createElement("button");
     btnDelete.classList.add("budget__list__item__button--delete");
     btnDelete.innerText = "Delete";
-    btnDelete.id = id;
+    btnDelete.id = incomeId;
     btnDiv.appendChild(btnDelete);
     console.log(incomes);
 
@@ -149,7 +149,7 @@ const createIncomeListItem = (title, value, id) => {
     btnEdit.addEventListener("click", () => {
         const saveBtn = document.createElement("button");
         saveBtn.innerText = "Save";
-        saveBtn.id = id;
+        saveBtn.id = incomeId;
         saveBtn.style.marginLeft = "10px";
         formDiv.appendChild(saveBtn);
         formValue.contentEditable = true;
@@ -166,7 +166,7 @@ const createIncomeListItem = (title, value, id) => {
             cancelBtn.hidden = true;
             
             formValue.style.setProperty("background-color", "");
-            const seatching_id = id;
+            const seatching_id = incomeId;
             const valueToChange = incomes.map((item) => {
                 if(seatching_id === item.id) {
                     item.value = `${valueToChange.value}`;
@@ -182,7 +182,7 @@ const createIncomeListItem = (title, value, id) => {
         formDiv.appendChild(cancelBtn);
         cancelBtn.style.marginLeft = "10px";
         cancelBtn.addEventListener("click", () => {
-        formValue.innerText = `${value}`;
+        formValue.innerText = `${incomeValue}`;
         formValue.style.setProperty("background-color", "");
         saveBtn.hidden = true;
         cancelBtn.hidden = true;
@@ -194,10 +194,12 @@ const createIncomeListItem = (title, value, id) => {
   
 };
 
-const createExpenseListItem = (expenseTitle, expenseValue, id) => {
+const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
     const expenseListItem = document.createElement("div");
     expenseListItem.style.paddingBottom = "5px";
     expenseListItem.classList = "flex flex--space-between budget__list__item";
+    expenseListItem.style.setProperty("display", "flex");
+    expenseListItem.style.setProperty("align-items", "center");
     const expenseListValue = document.createElement("p");
     
     expenseListValue.innerText = `${expenseTitle}:`;
@@ -206,10 +208,20 @@ const createExpenseListItem = (expenseTitle, expenseValue, id) => {
     expensesList.appendChild(expenseListItem);
     console.log(totalExpenses);
 
-    const spanValue = document.createElement("span");
-    spanValue.classList.add("spanValue");
-    spanValue.innerText = `${expenseValue} PLN`;
-    expenseListItem.appendChild(spanValue);
+    const formDiv = document.createElement("div");
+    formDiv.style.setProperty("display", "flex");
+    formDiv.style.setProperty("flex-direction", "row");
+    formDiv.classList.add("formDiv");
+    expenseListItem.appendChild(formDiv); 
+
+    const formValue = document.createElement("form");
+    formValue.classList.add("formValue");
+    formValue.innerText = `${expenseValue}`;
+    const PLN = document.createElement("span");
+    PLN.innerText = "PLN";
+    PLN.style.marginLeft = "10px";
+    formDiv.appendChild(formValue);
+    formDiv.appendChild(PLN);
 
     const btnDiv = document.createElement("div");
     btnDiv.classList.add("btnDiv");
@@ -218,30 +230,73 @@ const createExpenseListItem = (expenseTitle, expenseValue, id) => {
     const btnEdit = document.createElement("button");
     btnEdit.classList.add("budget__list__item__button--edit");
     btnEdit.innerText = "Edit";
-    btnEdit.id = id;
+    btnEdit.id = expenseId;
     btnEdit.style.marginRight = "10px";
     btnDiv.appendChild(btnEdit);
 
     const btnDelete = document.createElement("button");
     btnDelete.classList.add("budget__list__item__button--delete");
     btnDelete.innerText = "Delete";
-    btnDelete.id = id;
+    btnDelete.id = expenseId;
     btnDiv.appendChild(btnDelete);
-    console.log(incomes);
+    console.log(expenses);
 
-    btnDelete.addEventListener("click", (event) => {
+    btnDelete.addEventListener("click", (eventDelete) => {
         const indexToRemove = expenses.findIndex((item) => 
-        item.id ===event.target.id);
+        item.id ===eventDelete.target.id);
         expenses.splice(indexToRemove, 1);
+        expensesList.removeChild(expenseListItem);
         calculateExpenses();
         totalAmount = totalIncomes - totalExpenses;
         textCenter.innerText = displayText();
         expensesValue.innerText = totalExpenses;
-        expensesList.removeChild(expenseListItem);
-        console.log(expenses);
-
-        
+        console.log(expenses);        
     });
          
-    
+    btnEdit.addEventListener("click", () => {
+        const saveBtn = document.createElement("button");
+        saveBtn.innerText = "Save";
+        saveBtn.id = expenseId;
+        saveBtn.style.marginLeft = "10px";
+        formDiv.appendChild(saveBtn);
+        formValue.contentEditable = true;
+        formValue.style.setProperty("background-color", "white");
+        formValue.style.setProperty("display", "flex");
+        formValue.style.setProperty("align-items", "center");
+        formValue.style.padding = "10px";
+        formDiv.style.setProperty("display", "flex");
+        formDiv.style.setProperty("align-items", "center");
+
+        saveBtn.addEventListener("click", () => {
+            formValue.contentEditable = false;
+            saveBtn.hidden = true;
+            cancelBtn.hidden = true;
+            
+            formValue.style.setProperty("background-color", "");
+            const seatching_id = expenseId;
+            const valueToChange = expenses.map((item) => {
+                if(seatching_id === item.id) {
+                    item.value = `${valueToChange.value}`;
+                }
+                return item;
+            });
+            console.log(valueToChange);
+           
+        });
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.innerText = "Cancel";
+        formDiv.appendChild(cancelBtn);
+        cancelBtn.style.marginLeft = "10px";
+        cancelBtn.addEventListener("click", () => {
+        formValue.innerText = `${expenseValue}`;
+        formValue.style.setProperty("background-color", "");
+        saveBtn.hidden = true;
+        cancelBtn.hidden = true;
+        });
+        
+    });
+
+
+
 };
