@@ -159,7 +159,39 @@ const createIncomeListItem = (title, value, id) => {
         formValue.style.padding = "10px";
         formDiv.style.setProperty("display", "flex");
         formDiv.style.setProperty("align-items", "center");
+
+        saveBtn.addEventListener("click", () => {
+            formValue.contentEditable = false;
+            saveBtn.hidden = true;
+            cancelBtn.hidden = true;
+            
+            formValue.style.setProperty("background-color", "");
+            const seatching_id = id;
+            const valueToChange = incomes.map((item) => {
+                if(seatching_id === item.id) {
+                    item.value = `${valueToChange.value}`;
+                }
+                return item;
+            });
+            console.log(valueToChange);
+           
+        });
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.innerText = "Cancel";
+        formDiv.appendChild(cancelBtn);
+        cancelBtn.style.marginLeft = "10px";
+        cancelBtn.addEventListener("click", () => {
+        formValue.innerText = `${value}`;
+        formValue.style.setProperty("background-color", "");
+        saveBtn.hidden = true;
+        cancelBtn.hidden = true;
+        });
+        
     });
+
+
+  
 };
 
 const createExpenseListItem = (expenseTitle, expenseValue, id) => {
@@ -207,6 +239,8 @@ const createExpenseListItem = (expenseTitle, expenseValue, id) => {
         expensesValue.innerText = totalExpenses;
         expensesList.removeChild(expenseListItem);
         console.log(expenses);
+
+        
     });
          
     
