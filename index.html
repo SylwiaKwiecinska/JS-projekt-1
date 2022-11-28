@@ -29,8 +29,8 @@
 
                 <form id="incomeForm" class="budget__list__form">
                     <input type="text" id="incomeTitle" class="budget__list__form__input budget__list__form__input--text">
-                    <input type="number" id="incomeValue" class="budget__list__form__input budget__list__form__input--number">
-                    <input type="submit" id = "addIncome" value="Add" class="budget__list__form__input__button">
+                    <input type="number" min = "0" id="incomeValue" class="budget__list__form__input budget__list__form__input--number">
+                    <input type="submit" id = "addIncome" value="Add" class="budget__list__form__input__button" disabled>
                 </form>
 
                 <ul id="incomesList" class="budget__list"></ul>
@@ -42,10 +42,11 @@
            
             <div class="budget__expenses">
                 <h2 class="budget__list__header expenses__header">Expenses</h2>
+
                 <form id="expenseForm" class="budget__list__form">
                     <input type="text" id="expenseTitle" class="budget__list__form__input budget__list__form__input--text">
-                    <input type="number" id="expenseValue" class="budget__list__form__input budget__list__form__input--number">
-                    <input type="submit" id = "addExpense" value="Add" class="budget__list__form__input__button">
+                    <input type="number" min="0" id="expenseValue" class="budget__list__form__input budget__list__form__input--number">
+                    <input type="submit" id = "addExpense" value="Add" class="budget__list__form__input__button" disabled>
                 </form>
 
                 <ul id="expensesList" class="budget__list"></ul>

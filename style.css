@@ -97,7 +97,6 @@ h2{
 .budget__list__form__input{
     font-size: var(--font-sm);
     line-height: 24px;
-    border: none;
 }
 
 .budget__list__form__input--text{
@@ -139,42 +138,6 @@ h2{
         margin-top: 0;
     }
 }
-
-
-
-/* A SAMPLE STYLING OF BUDGET LIST ITEM
-
-.budget__list__item{
-    flex-direction: column;
-    padding: 2px 0;
-    border: 1px solid var(--white);
-    background-color: var(--biscuit);
-}
-
-.budget__list__item__button{
-    padding: 3px 15px;
-    margin: 2px;
-    border: none;
-    color: var(--white);
-    font-size: var(--font-s);
-    font-weight: 700;
-    line-height: 18px;
-}
-
-.budget__list__item__button--edit{
-    background-color: var(--edit);
-}
-
-.budget__list__item__button--delete{
-    background-color: var(--danger);
-}
-
-@media screen and (min-width: 1024px){
-    .budget__list__item{
-        flex-direction: row;
-        align-items: center;
-    }
-} */
 
 footer{
     display: flex;
