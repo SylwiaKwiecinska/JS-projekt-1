@@ -55,8 +55,6 @@ expenseValue.addEventListener('input', function () {
     addExpense.disabled = !isExpenseTitleValueSet || !isExpenseValueSet ? true : false;
 }); 
 
-
-
 const incomes =[];
 const expenses = [];
 
@@ -73,7 +71,6 @@ const displayText = () => {
     } else {
         return  `The balance is negative. You're in the red ${totalAmount} PLN`;
     }
-   
 };
 
 const incomesAddElem = () => {
@@ -82,9 +79,13 @@ const incomesAddElem = () => {
         value: Number(incomeValue.value),
         id: (Math.random() * 100000).toFixed(0),
     };
-    incomes.push(incomeEle);
-    createIncomeListItem(incomeEle.title, incomeEle.value, incomeEle.id);
-    calculateIncomes();
+    if (Number(incomeValue.value)<0) {
+        alert('Minus values are not allowed');
+    }else{
+        incomes.push(incomeEle);
+        createIncomeListItem(incomeEle.title, incomeEle.value, incomeEle.id);
+        calculateIncomes();
+    }
 };    
 
 const calculateIncomes = () => {
@@ -115,9 +116,13 @@ const expensesAddElem = () => {
         value: Number(expenseValue.value),
         id: (Math.random() * 100000).toFixed(0),
     };
-    expenses.push(expenseEle);
-    createExpenseListItem(expenseEle.title, expenseEle.value, expenseEle.id);
-    calculateExpenses();
+    if (Number(expenseValue.value)<0) {
+        alert('Minus values are not allowed');
+    }else{
+        expenses.push(expenseEle);
+        createExpenseListItem(expenseEle.title, expenseEle.value, expenseEle.id);
+        calculateExpenses();
+    }
 };
 
 const calculateExpenses = () => {
@@ -145,6 +150,7 @@ addExpense.addEventListener("click", (event) => {
 const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
 
     const incomeListItem = document.createElement("div");
+    incomeListItem.style.setProperty("width", "96%");
     incomeListItem.style.paddingBottom = "5px";
     incomeListItem.classList = "flex flex--space-between";
     incomeListItem.style.setProperty("align-items", "center");
@@ -202,16 +208,18 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
         incomeListValue.hidden = true;
 
         const inputIncomeTitle = document.createElement("input");
+        inputIncomeTitle.style.setProperty("width", "50%");
         inputIncomeTitle.style.marginRight = "10px";
         inputIncomeTitle.value = incomes.filter(income => income.id === incomeId)[0].title;
         inputIncomeTitle.classList.add("inputIncomeTitle");
-        inputIncomeTitle.style.setProperty("type", "text");
+        inputIncomeTitle.type = "text";
         formDiv.appendChild(inputIncomeTitle);
         
         const inputValue = document.createElement("input");
+        inputValue.style.setProperty("width", "50%");
         inputValue.value = incomes.filter(income => income.id === incomeId)[0].value;
         inputValue.classList.add("inputValue");
-        inputValue.style.setProperty("type", "number");
+        inputValue.type = "number";
         formDiv.appendChild(inputValue);
         
         const saveBtn = document.createElement("button");
@@ -231,17 +239,20 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
         
         saveBtn.addEventListener("click", () => {
         
-            saveBtn.hidden = true;
-            cancelBtn.hidden = true;
+            if (Number(inputValue.value)<0) {
+                alert('Minus values are not allowed');
+            }else{
+                saveBtn.hidden = true;
+                cancelBtn.hidden = true;
             
-            const saveIncomeInputValue = incomeId;
-            incomes.map((item) => {
-                if(saveIncomeInputValue === item.id) {
-                    item.value = Number(inputValue.value);
-                    //itemTitle.title = Text(inputIncomeTitle.title);
-                }
-                return item;
-            });
+                const saveIncomeInputValue = incomeId;
+                    incomes.map((item) => {
+                    if(saveIncomeInputValue === item.id) {
+                        item.value = Number(inputValue.value);
+                        item.title = inputIncomeTitle.value;
+                    }
+                    return item;
+                });
 
             calculateIncomes();
             
@@ -253,6 +264,8 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
             inputIncomeTitle.hidden = true;
             formValue.hidden = false; 
             formValue.innerText = inputValue.value;
+            incomeListValue.innerText = inputIncomeTitle.value;
+            }       
         });
 
         cancelBtn.addEventListener("click", () => {
@@ -273,6 +286,7 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
 const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
 
     const expenseListItem = document.createElement("div");
+    expenseListItem.style.setProperty("width", "96%");
     expenseListItem.style.paddingBottom = "5px";
     expenseListItem.classList = "flex flex--space-between";
     expenseListItem.style.setProperty("align-items", "center");
@@ -331,11 +345,13 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
         expenseListValue.hidden = true;
 
         const inputExpenseTitle = document.createElement("input");
+        inputExpenseTitle.style.setProperty("width", "50%");
         inputExpenseTitle.style.marginRight = "10px";
         inputExpenseTitle.value = expenses.filter(expense => expense.id === expenseId)[0].title;
         formDiv.appendChild(inputExpenseTitle);
        
         const inputValue = document.createElement("input");
+        inputValue.style.setProperty("width", "50%");
         inputValue.value = expenses.filter(expense => expense.id === expenseId)[0].value;
         inputValue.classList.add("inputValue");
         inputValue.style.setProperty("type", "number");
@@ -358,13 +374,17 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
 
         saveBtn.addEventListener("click", () => {
 
-            saveBtn.hidden = true;
-            cancelBtn.hidden = true;
+            if (Number(inputValue.value)<0) {
+                alert('Minus values are not allowed');
+            }else{
+                saveBtn.hidden = true;
+                cancelBtn.hidden = true;
             
-            const saveExpenseInputValue = expenseId;
-            expenses.map((item) => {
-                if(saveExpenseInputValue === item.id) {
-                    item.value = Number(inputValue.value);
+                const saveExpenseInputValue = expenseId;
+                    expenses.map((item) => {
+                    if(saveExpenseInputValue === item.id) {
+                        item.value = Number(inputValue.value);
+                        item.title = inputExpenseTitle.value;
                 }
                 return item;
             });
@@ -380,7 +400,9 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
             inputExpenseTitle.hidden = true;
             formValue.hidden = false; 
             formValue.innerText = inputValue.value;
-         });
+            expenseListValue.innerText = inputExpenseTitle.value;
+            }
+        });
         
         cancelBtn.addEventListener("click", () => {
             inputValue.hidden = true;
