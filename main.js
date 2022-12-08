@@ -16,22 +16,13 @@ let isIncomeTitleValueSet = false;
 let isIncomeValueSet = false;
 
 incomeTitle.addEventListener('input', function () {
-    // if (incomeTitle.value) {
-    //     isIncomeTitleValueSet = true;
-    // } else {
-    //     isIncomeTitleValueSet = false;
-    // }
-    isIncomeTitleValueSet =!!incomeTitle.value
-    addIncome.disabled = !isIncomeTitleValueSet || !isIncomeValueSet ? true : false;
+    isIncomeTitleValueSet = !!incomeTitle.value;
+    addIncome.disabled = !isIncomeTitleValueSet || !isIncomeValueSet;
 });
 
 incomeValue.addEventListener('input', function () {
-    if (incomeValue.value) {
-        isIncomeValueSet = true;
-    } else {
-        isIncomeValueSet = false;
-    }
-    addIncome.disabled = !isIncomeTitleValueSet || !isIncomeValueSet ? true : false;
+    isIncomeValueSet = !!incomeValue.value;
+    addIncome.disabled = !isIncomeTitleValueSet || !isIncomeValueSet;
 });
 
 
@@ -39,21 +30,13 @@ let isExpenseTitleValueSet = false;
 let isExpenseValueSet = false;
 
 expenseTitle.addEventListener('input', function () {
-    if (expenseTitle.value) {
-        isExpenseTitleValueSet = true;
-    } else {
-        isExpenseTitleValueSet = false;
-    }
-    addExpense.disabled = !isExpenseTitleValueSet || !isExpenseValueSet ? true : false;
+    isExpenseTitleValueSet = !!expenseTitle.value;
+    addExpense.disabled = !isExpenseTitleValueSet || !isExpenseValueSet;
 });
 
 expenseValue.addEventListener('input', function () {
-    if (expenseValue.value) {
-        isExpenseValueSet = true;
-    } else {
-        isExpenseValueSet = false;
-    }
-    addExpense.disabled = !isExpenseTitleValueSet || !isExpenseValueSet ? true : false;
+    isExpenseValueSet =!! expenseValue.value;
+    addExpense.disabled = !isExpenseTitleValueSet || !isExpenseValueSet;
 }); 
 
 const incomes =[];
