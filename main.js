@@ -16,11 +16,12 @@ let isIncomeTitleValueSet = false;
 let isIncomeValueSet = false;
 
 incomeTitle.addEventListener('input', function () {
-    if (incomeTitle.value) {
-        isIncomeTitleValueSet = true;
-    } else {
-        isIncomeTitleValueSet = false;
-    }
+    // if (incomeTitle.value) {
+    //     isIncomeTitleValueSet = true;
+    // } else {
+    //     isIncomeTitleValueSet = false;
+    // }
+    isIncomeTitleValueSet =!!incomeTitle.value
     addIncome.disabled = !isIncomeTitleValueSet || !isIncomeValueSet ? true : false;
 });
 
