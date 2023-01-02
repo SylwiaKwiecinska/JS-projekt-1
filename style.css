@@ -30,9 +30,40 @@ main{
     justify-content: space-between;
 }
 
+.listItem{
+    width: 96%;
+    padding-bottom: 5px;
+    align-items: center;
+}
+
+.formDiv{
+    display: flex;
+}
+
+.span {
+    margin-left: 10px;
+}
+
 .text--center{
     width: 96%;
     text-align: center;
+}
+
+.inputTitle{
+    width: 50%;
+    margin-right: 10px;
+}
+
+.cancellable{
+    margin-left: 10px;
+}
+
+.inputValue{
+    width: 50%;
+}
+
+.formValue{
+    margin-right: 10px;
 }
 
 .app__logo{

@@ -131,31 +131,64 @@ addExpense.addEventListener("click", (event) => {
     
 });
 
+const createSaveButton = (id) => {
+    const saveBtn = document.createElement("button");
+    saveBtn.innerText = "Save";
+    saveBtn.id = id;
+    saveBtn.classList = "cancellable";
+    return saveBtn;
+};
+
+const createEditButton = (id) => {
+    const btnEdit = document.createElement("button");
+    btnEdit.innerText = "Edit";
+    btnEdit.id = id;
+    btnEdit.classList = "cancellable";
+    return btnEdit;
+};
+
+const createDeleteButton = (id) => {
+    const btnDelete = document.createElement("button");
+    btnDelete.innerText = "Delete";
+    btnDelete.id = id;
+    btnDelete.classList = "cancellable";
+    return btnDelete;
+};
+
+const CreateCancelButton = (id) => {
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "Cancel";
+    cancelBtn.id = id;
+    cancelBtn.classList = "cancellable";
+    return cancelBtn;
+};
+
+const hideButtons = (element) => {
+    element.querySelectorAll('.cancellable').forEach(child => {
+        child.hidden = !child.hidden;} );
+};
+
 const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
 
-    const incomeListItem = document.createElement("div");
-    incomeListItem.style.setProperty("width", "96%");
-    incomeListItem.style.paddingBottom = "5px";
-    incomeListItem.classList = "flex flex--space-between";
-    incomeListItem.style.setProperty("align-items", "center");
-    
+    const incomeListItem = document.createElement("div");  
+    incomeListItem.classList = "flex flex--space-between listItem";
+       
     const incomeListValue = document.createElement("p");
     incomeListValue.innerText = `${incomeTitle}:`;
     incomeListItem.appendChild(incomeListValue);
     incomesList.appendChild(incomeListItem);
 
     const formDiv = document.createElement("div");
-    formDiv.style.setProperty("display", "flex");
-    formDiv.classList.add("formDiv");
+    formDiv.classList = "formDiv";
     incomeListItem.appendChild(formDiv);  
     
     const formValue = document.createElement("div");
-    formValue.classList.add("formValue");
+    formValue.classList ="formValue cancellable";
     formValue.innerText = incomeValue;
     
     const PLN = document.createElement("span");
     PLN.innerText = "PLN";
-    PLN.style.marginLeft = "10px";
+    PLN.classList = "cancellable";
     formDiv.appendChild(formValue);
     formDiv.appendChild(PLN);
     
@@ -163,17 +196,10 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
     btnDiv.classList.add("btnDiv");
     incomeListItem.appendChild(btnDiv);
 
-    const btnEdit = document.createElement("button");
-    btnEdit.classList.add("btnEdit");
-    btnEdit.innerText = "Edit";
-    btnEdit.id = incomeId;
-    btnEdit.style.marginRight = "10px";
+    const btnEdit = createEditButton(incomeId);
     btnDiv.appendChild(btnEdit);
 
-    const btnDelete = document.createElement("button");
-    btnDelete.classList.add("btnDelete");
-    btnDelete.innerText = "Delete";
-    btnDelete.id = incomeId;
+    const btnDelete = createDeleteButton(incomeId);
     btnDiv.appendChild(btnDelete);
 
     btnDelete.addEventListener("click", (eventDelete) => {
@@ -192,30 +218,21 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
         incomeListValue.hidden = true;
 
         const inputIncomeTitle = document.createElement("input");
-        inputIncomeTitle.style.setProperty("width", "50%");
-        inputIncomeTitle.style.marginRight = "10px";
         inputIncomeTitle.value = incomes.filter(income => income.id === incomeId)[0].title;
-        inputIncomeTitle.classList.add("inputIncomeTitle");
+        inputIncomeTitle.classList = "inputTitle";
         inputIncomeTitle.type = "text";
         formDiv.appendChild(inputIncomeTitle);
         
         const inputValue = document.createElement("input");
-        inputValue.style.setProperty("width", "50%");
         inputValue.value = incomes.filter(income => income.id === incomeId)[0].value;
-        inputValue.classList.add("inputValue");
+        inputValue.classList = "inputValue cancellable";
         inputValue.type = "number";
         formDiv.appendChild(inputValue);
         
-        const saveBtn = document.createElement("button");
-        saveBtn.innerText = "Save";
-        saveBtn.id = incomeId;
-        saveBtn.style.marginLeft = "10px";
+        const saveBtn = createSaveButton(incomeId);
         formDiv.appendChild(saveBtn);
 
-        const cancelBtn = document.createElement("button");
-        cancelBtn.innerText = "Cancel";
-        cancelBtn.id = incomeId;
-        cancelBtn.style.marginLeft = "10px";
+        const cancelBtn = CreateCancelButton(incomeId);
         formDiv.appendChild(cancelBtn);
         
         PLN.hidden = true;
@@ -242,24 +259,19 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
             
             btnEdit.hidden = false;
             btnDelete.hidden = false;
-            incomeListValue.hidden = false;
             PLN.hidden = false;
             inputValue.hidden = true;
-            inputIncomeTitle.hidden = true;
             formValue.hidden = false; 
+            
+            inputIncomeTitle.hidden = true;
+            incomeListValue.hidden = false;
             formValue.innerText = inputValue.value;
             incomeListValue.innerText = inputIncomeTitle.value;
             }       
         });
 
         cancelBtn.addEventListener("click", () => {
-            inputValue.hidden = true;
-            saveBtn.hidden = true;
-            cancelBtn.hidden = true;
-            formValue.hidden = false; 
-            PLN.hidden = false;
-            btnEdit.hidden = false;
-            btnDelete.hidden = false; 
+            hideButtons(incomeListItem);
             inputIncomeTitle.hidden = true;
             incomeListValue.hidden = false;
 
@@ -270,28 +282,24 @@ const createIncomeListItem = (incomeTitle, incomeValue, incomeId) => {
 const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
 
     const expenseListItem = document.createElement("div");
-    expenseListItem.style.setProperty("width", "96%");
-    expenseListItem.style.paddingBottom = "5px";
-    expenseListItem.classList = "flex flex--space-between";
-    expenseListItem.style.setProperty("align-items", "center");
-
+    expenseListItem.classList = "flex flex--space-between listItem";
+    
     const expenseListValue = document.createElement("p");
     expenseListValue.innerText = `${expenseTitle}:`;
     expenseListItem.appendChild(expenseListValue);
     expensesList.appendChild(expenseListItem);
 
     const formDiv = document.createElement("div");
-    formDiv.style.setProperty("display", "flex");
-    formDiv.classList.add("formDiv");
+    formDiv.classList = "formDiv";
     expenseListItem.appendChild(formDiv); 
 
     const formValue = document.createElement("div");
-    formValue.classList.add("formValue");
+    formValue.classList ="formValue cancellable";
     formValue.innerText = expenseValue;
 
     const PLN = document.createElement("span");
     PLN.innerText = "PLN";
-    PLN.style.marginLeft = "10px";
+    PLN.classList = "cancellable";
     formDiv.appendChild(formValue);
     formDiv.appendChild(PLN);
 
@@ -299,17 +307,10 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
     btnDiv.classList.add("btnDiv");
     expenseListItem.appendChild(btnDiv);
 
-    const btnEdit = document.createElement("button");
-    btnEdit.classList.add("btnEdit");
-    btnEdit.innerText = "Edit";
-    btnEdit.id = expenseId;
-    btnEdit.style.marginRight = "10px";
+    const btnEdit = createEditButton(expenseId);
     btnDiv.appendChild(btnEdit);
 
-    const btnDelete = document.createElement("button");
-    btnDelete.classList.add("btnDelete");
-    btnDelete.innerText = "Delete";
-    btnDelete.id = expenseId;
+    const btnDelete = createDeleteButton(expenseId);
     btnDiv.appendChild(btnDelete);
 
     btnDelete.addEventListener("click", (eventDelete) => {
@@ -329,28 +330,21 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
         expenseListValue.hidden = true;
 
         const inputExpenseTitle = document.createElement("input");
-        inputExpenseTitle.style.setProperty("width", "50%");
-        inputExpenseTitle.style.marginRight = "10px";
         inputExpenseTitle.value = expenses.filter(expense => expense.id === expenseId)[0].title;
+        inputExpenseTitle.classList = "inputTitle";
+        inputExpenseTitle.type = "text";
         formDiv.appendChild(inputExpenseTitle);
        
         const inputValue = document.createElement("input");
-        inputValue.style.setProperty("width", "50%");
         inputValue.value = expenses.filter(expense => expense.id === expenseId)[0].value;
-        inputValue.classList.add("inputValue");
-        inputValue.style.setProperty("type", "number");
+        inputValue.classList = "inputValue cancellable";
+        inputValue.type = "number";
         formDiv.appendChild(inputValue);
 
-        const saveBtn = document.createElement("button");
-        saveBtn.innerText = "Save";
-        saveBtn.id = expenseId;
-        saveBtn.style.marginLeft = "10px";
+        const saveBtn = createSaveButton(expenseId);
         formDiv.appendChild(saveBtn);
 
-        const cancelBtn = document.createElement("button");
-        cancelBtn.innerText = "Cancel";
-        cancelBtn.id = expenseId;
-        cancelBtn.style.marginLeft = "10px";
+        const cancelBtn = CreateCancelButton(expenseId);
         formDiv.appendChild(cancelBtn);
 
         PLN.hidden = true;
@@ -378,26 +372,22 @@ const createExpenseListItem = (expenseTitle, expenseValue, expenseId) => {
             
             btnEdit.hidden = false;
             btnDelete.hidden = false;
-            expenseListValue.hidden = false;
             PLN.hidden = false;
             inputValue.hidden = true;
-            inputExpenseTitle.hidden = true;
-            formValue.hidden = false; 
+            formValue.hidden = false;
+
+            inputExpenseTitle.hidden = true; 
+            expenseListValue.hidden = false;
             formValue.innerText = inputValue.value;
             expenseListValue.innerText = inputExpenseTitle.value;
             }
         });
         
         cancelBtn.addEventListener("click", () => {
-            inputValue.hidden = true;
-            saveBtn.hidden = true;
-            cancelBtn.hidden = true;
-            formValue.hidden = false; 
-            PLN.hidden = false;
-            btnEdit.hidden = false;
-            btnDelete.hidden = false; 
+            hideButtons(expenseListItem);
             inputExpenseTitle.hidden = true;
             expenseListValue.hidden = false;      
         });      
     });
 };
+
